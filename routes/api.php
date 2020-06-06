@@ -19,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // companies API routes
-Route::get('/companies', 'CompaniesController@index');
-Route::get('/companies/{id}', 'CompaniesController@show');
-Route::post('/companies', 'CompaniesController@store');
-Route::put('/companies/{id}', 'CompaniesController@update');
-Route::delete('/companies/{id}', 'CompaniesController@delete');
+// Route::get('/companies', 'CompaniesController@index');
+// Route::get('/companies/{id}', 'CompaniesController@show');
+// Route::post('/companies', 'CompaniesController@store');
+// Route::put('/companies/{id}', 'CompaniesController@update');
+// Route::delete('/companies/{id}', 'CompaniesController@delete');
 
-// employees API routes
-Route::get('/employees', 'EmployeesController@index');
-Route::get('/employees/{id}', 'EmployeesController@show');
-Route::post('/employees', 'EmployeesController@store');
-Route::put('/employees/{id}', 'EmployeesController@update');
-Route::delete('/employees/{id}', 'EmployeesController@delete');
+// // employees API routes
+// Route::get('/employees', 'EmployeesController@index');
+// Route::get('/employees/{id}', 'EmployeesController@show');
+// Route::post('/employees', 'EmployeesController@store');
+// Route::put('/employees/{id}', 'EmployeesController@update');
+// Route::delete('/employees/{id}', 'EmployeesController@delete');
