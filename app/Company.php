@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class company extends Model
+class Company extends Model
 {
-    public function employees() // REVIEW relationship
+    protected $guarded = ['id'];
+    protected $fillable = ["name","email","site","logo"];
+    public function employees()
     {
-        return $this->hasMany('Employee');
+        return $this->hasMany('App\Employee');
     }
 }

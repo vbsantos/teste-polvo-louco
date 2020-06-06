@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class employee extends Model
+class Employee extends Model
 {
-    public function Company() // REVIEW relationship
+    protected $guarded = ['id'];
+    protected $fillable = ["firstname","lastname","company_id","email","phone"];
+    public function company()
     {
-        return $this->belongsTo('Company');
+        return $this->belongsTo('App\Company');
     }
 }
