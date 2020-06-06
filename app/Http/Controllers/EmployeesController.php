@@ -16,7 +16,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $employees = Employee::all(); //->paginate(10);
-        //return view(employees.index);
+        //return view(employees.index); //REVIEW trabalhar com views?
         return $employees;
     }
 
@@ -50,7 +50,7 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         return $employee;
     }
 
@@ -75,11 +75,13 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         $employee = Employee::findOrFail($id);
-        $employee->name = $request->name;
-        $employee->description = $request->description;
-        $employee->quantity = $request->quantity;
-        $employee->price = $request->price;
+        $employee->firstname = $request->firstname;
+        $employee->lastname = $request->lastname;
+        $employee->company_id = $request->company_id;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
         $employee->save();
+        return $employee;
     }
 
     /**
@@ -88,9 +90,9 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $employee = Employee::findOrFail($id);
-        $employee->delete();
+        return $employee->delete();
     }
 }

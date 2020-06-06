@@ -50,7 +50,7 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        $company = Company::find($id);
+        $company = Company::findOrFail($id);
         return $company;
     }
 
@@ -80,6 +80,7 @@ class CompaniesController extends Controller
         $company->site = $request->site;
         $company->logo = $request->logo;
         $company->save();
+        return $company;
     }
 
     /**
@@ -88,9 +89,9 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $company = Company::findOrFail($id);
-        $company->delete();
+        return $company->delete();
     }
 }
