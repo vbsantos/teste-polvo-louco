@@ -38,6 +38,13 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required','unique:App\Company,email','email:rfc,dns'],
+            'site' => ['url'],
+            'logo' => ['dimensions:min_width=100, min_height=100'], //REVIEW image validation
+        ]);
+        return $valid;
         $company = Company::create($request->all());
         return response()->json($company, 201);
     }
@@ -74,6 +81,12 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required','unique:App\Company,email','email:rfc,dns'],
+            'site' => ['url'],
+            'logo' => ['dimensions:min_width=100, min_height=100'], //REVIEW image validation
+        ]);
         $company = Company::findOrFail($id);
         $company->name = $request->name;
         $company->email = $request->email;

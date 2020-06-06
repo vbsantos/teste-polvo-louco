@@ -38,6 +38,13 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'firstname' => ['required','max:255'],
+            'lastname' => ['required','max:255'],
+            'company_id' => ['required','exists:App\Company,id'],
+            'email' => ['required','unique:App\Employee,email','email:rfc,dns'],
+            'phone' => ['max:15'],
+        ]);
         $employee = Employee::create($request->all());
         return response()->json($employee, 201);
     }
@@ -74,6 +81,13 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'firstname' => ['required','max:255'],
+            'lastname' => ['required','max:255'],
+            'company_id' => ['required','exists:App\Company,id'],
+            'email' => ['required','unique:App\Employee,email','email:rfc,dns'],
+            'phone' => ['max:15'],
+        ]);
         $employee = Employee::findOrFail($id);
         $employee->firstname = $request->firstname;
         $employee->lastname = $request->lastname;
