@@ -16,8 +16,7 @@ class CompaniesController extends Controller
     public function index()
     {
         $companies = Company::paginate(10);
-        //return view(companies.index); REVIEW trabalhar com views?
-        return $companies;
+        return view('companies.index');
     }
 
     /**
@@ -27,7 +26,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        //REVIEW trabalhar com views?
+        return view('companies.create');
     }
 
     /**
@@ -69,7 +68,7 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        //REVIEW trabalhar com views?
+        return view('companies.edit');
     }
 
     /**

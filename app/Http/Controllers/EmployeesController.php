@@ -17,8 +17,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $employees = Employee::paginate(10);
-        //return view(employees.index); //REVIEW trabalhar com views?
-        return $employees;
+        return view('employees.index');
     }
 
     /**
@@ -28,7 +27,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //REVIEW trabalhar com views?
+        return view('employees.create');
     }
 
     /**
@@ -70,7 +69,7 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        //REVIEW trabalhar com views?
+        return view('employees.edit');
     }
 
     /**
