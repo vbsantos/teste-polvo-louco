@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use App\Employee;
 
@@ -38,11 +39,11 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validate([ // REVIEW Input validation
             'firstname' => ['required','max:255'],
             'lastname' => ['required','max:255'],
-            'company_id' => ['required','exists:App\Company,id'],
-            'email' => ['required','unique:App\Employee,email','email:rfc,dns'],
+            'company_id' => ['required','exists:App\Company,id','max:255'],
+            'email' => ['required','unique:App\Employee,email','email:rfc,dns','max:255'],
             'phone' => ['max:15'],
         ]);
         $employee = Employee::create($request->all());
@@ -81,20 +82,15 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $request->validate([ // REVIEW Input validation
             'firstname' => ['required','max:255'],
             'lastname' => ['required','max:255'],
-            'company_id' => ['required','exists:App\Company,id'],
-            'email' => ['required','unique:App\Employee,email','email:rfc,dns'],
+            'company_id' => ['required','exists:App\Company,id','max:255'],
+            'email' => ['required','unique:App\Employee,email','email:rfc,dns','max:255'],
             'phone' => ['max:15'],
         ]);
         $employee = Employee::findOrFail($id);
-        $employee->firstname = $request->firstname;
-        $employee->lastname = $request->lastname;
-        $employee->company_id = $request->company_id;
-        $employee->email = $request->email;
-        $employee->phone = $request->phone;
-        $employee->save();
+        $employee->update($request->all());
         return $employee;
     }
 
