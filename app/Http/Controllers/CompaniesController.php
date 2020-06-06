@@ -15,9 +15,9 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companys = Company::all(); //->paginate(10);
-        //return view(companys.index); REVIEW trabalhar com views?
-        return $companys;
+        $companies = Company::paginate(10);
+        //return view(companies.index); REVIEW trabalhar com views?
+        return $companies;
     }
 
     /**
