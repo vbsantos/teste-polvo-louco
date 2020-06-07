@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 use App\Employee;
+use App\Company;
 
 class EmployeesController extends Controller
 {
@@ -16,8 +17,9 @@ class EmployeesController extends Controller
      */
     public function index()
     {
+        Log::info("EmployeesController@index");
         $employees = Employee::paginate(10);
-        return view('employees.index');
+        return view('employees.index')->with("employees", $employees);
     }
 
     /**
@@ -27,7 +29,9 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        Log::info("CompaniesController@create");
+        $companies = Company::all();
+        return view('employees.create')->with("companies", $companies);;
     }
 
     /**
@@ -38,15 +42,18 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([ // REVIEW Input validation
+        Log::info("EmployeesController@store: ". json_encode($request->all()));
+        $request->validate([
             'firstname' => ['required','max:255'],
             'lastname' => ['required','max:255'],
             'company_id' => ['required','exists:App\Company,id','max:255'],
             'email' => ['required','unique:App\Employee,email','email:rfc,dns','max:255'],
-            'phone' => ['max:15'],
+            'phone' => ['min:8','max:15'],
         ]);
         $employee = Employee::create($request->all());
-        return response()->json($employee, 201);
+        if (isset($employee)) {
+            return redirect('/employees');
+        }
     }
 
     /**
@@ -57,6 +64,7 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
+        Log::info("EmployeesController@show: ".$id);
         $employee = Employee::findOrFail($id);
         return $employee;
     }
@@ -69,7 +77,9 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        return view('employees.edit');
+        Log::info("EmployeesController@edit: ".$id);
+        $employee = Employee::findOrFail($id);
+        return view('employees.edit')->with("employees", $employees);
     }
 
     /**
@@ -81,12 +91,13 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([ // REVIEW Input validation
+        Log::info("EmployeesController@update: [".$id."] ".json_encode($request->all()));
+        $request->validate([
             'firstname' => ['required','max:255'],
             'lastname' => ['required','max:255'],
             'company_id' => ['required','exists:App\Company,id','max:255'],
             'email' => ['required','unique:App\Employee,email','email:rfc,dns','max:255'],
-            'phone' => ['max:15'],
+            'phone' => ['min:8','max:15'],
         ]);
         $employee = Employee::findOrFail($id);
         $employee->update($request->all());
@@ -101,6 +112,7 @@ class EmployeesController extends Controller
      */
     public function delete($id)
     {
+        Log::info("EmployeesController@delete: ".$id);
         $employee = Employee::findOrFail($id);
         return $employee->delete();
     }

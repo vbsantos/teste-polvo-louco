@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 use App\Company;
 
 class CompaniesController extends Controller
@@ -15,8 +15,9 @@ class CompaniesController extends Controller
      */
     public function index()
     {
+        Log::info("CompaniesController@index");
         $companies = Company::paginate(10);
-        return view('companies.index');
+        return view('companies.index')->with("companies", $companies);
     }
 
     /**
@@ -26,6 +27,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
+        Log::info("CompaniesController@create");
         return view('companies.create');
     }
 
@@ -37,15 +39,28 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([ // REVIEW Input validation
+        Log::info("CompaniesController@store: ". json_encode($request->all()));
+        $request->validate([
             'name' => ['required','max:255'],
             'email' => ['required','unique:App\Company,email','email:rfc,dns','max:255'],
             'site' => ['url','max:255'],
-            'logo' => ['dimensions:min_width=100, min_height=100'], // REVIEW image validation
+            'logo' => ['dimensions:min_width=100, min_height=100'],
         ]);
-        return $valid;
-        $company = Company::create($request->all());
-        return response()->json($company, 201);
+        $company = new Company();
+        $company->name = $request->input('name');
+        $company->email = $request->input('email');
+        $company->site = $request->input('site');
+        $logo = $request->file('logo');
+        if (isset($logo)) {
+            $filepath = $request->file('logo')->store('images', 'public');
+            $company->logo = $filepath;
+        } else {
+            $company->logo = '';
+        }
+        $company->save();
+        if (isset($company)) {
+            return redirect('/companies');
+        }
     }
 
     /**
@@ -56,6 +71,7 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
+        Log::info("CompaniesController@show: ".$id);
         $company = Company::findOrFail($id);
         return $company;
     }
@@ -68,7 +84,9 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        return view('companies.edit');
+        Log::info("CompaniesController@edit: ".$id);
+        $company = Company::findOrFail($id);
+        return view('companies.edit')->with("companies", $companies);
     }
 
     /**
@@ -80,11 +98,12 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([ // REVIEW Input validation
+        Log::info("CompaniesController@update: [".$id."] ".json_encode($request->all()));
+        $request->validate([
             'name' => ['required','max:255'],
             'email' => ['required','unique:App\Company,email','email:rfc,dns','max:255'],
             'site' => ['url','max:255'],
-            'logo' => ['dimensions:min_width=100, min_height=100'], // REVIEW image validation
+            'logo' => ['dimensions:min_width=100, min_height=100'],
         ]);
         $company = Company::findOrFail($id);
         $company->name = $request->name;
@@ -103,6 +122,7 @@ class CompaniesController extends Controller
      */
     public function delete($id)
     {
+        Log::info("CompaniesController@delete: ".$id);
         $company = Company::findOrFail($id);
         return $company->delete();
     }
