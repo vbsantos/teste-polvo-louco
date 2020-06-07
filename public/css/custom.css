@@ -6,6 +6,15 @@ body {
         rgb(243, 244, 255) 0%,
         rgb(255, 244, 246) 100%
     );
+    color: #636b6f;
+    font-family: "Nunito", sans-serif;
+    font-weight: 200;
     height: 100vh;
     margin: 0;
+}
+
+footer,
+footer * {
+    color: rgba(128, 128, 128, 0.8);
+    font-size: 8px;
 }
