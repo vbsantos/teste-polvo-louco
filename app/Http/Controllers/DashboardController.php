@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Company;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $companies = Company::all();
+        return view('dashboard')->with("companies", $companies);
     }
 }
