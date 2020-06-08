@@ -100,6 +100,8 @@ class CompaniesController extends Controller
     Log::info("CompaniesController@delete: " . $id);
 
     $company = Company::findOrFail($id);
+    $companyLogo = $company->logo;
+    File::delete('storage/' . $companyLogo);
     $company->delete();
     return redirect('/companies');
   }
