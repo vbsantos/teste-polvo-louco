@@ -18,7 +18,7 @@
             <div class="card-header text-center">
                 <h3>Register Company</h3>
             </div>
-            <form method="POST" action="{{action('CompaniesController@store')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('company.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
