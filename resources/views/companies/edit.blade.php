@@ -14,7 +14,7 @@
                 </ul>
             </div>
         @endif
-        <div class="card bg-transparent text-dark w-50 mx-auto">
+        <div id="form" class="card bg-transparent text-dark mx-auto">
             <div class="card-header text-center">
                 <h3 class="title">Update Company</h3>
             </div>
