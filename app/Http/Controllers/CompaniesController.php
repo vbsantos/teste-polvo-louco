@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Company;
+use File;
 
 class CompaniesController extends Controller
 {
@@ -82,8 +83,8 @@ class CompaniesController extends Controller
         $company->email = $request->email;
         $company->site = $request->site;
         if ($request->hasFile('logo')) {
-            $oldImage = $company->logo; // REVIEW remover imagem anterior?
-            unlink(public_path('storage/') . $oldImage);
+            $oldImage = $company->logo;
+            File::delete('storage/'.$oldImage);
             $path = $request->file('logo')->store('images', 'public');
             $company->logo = $path;
             $company->save();
