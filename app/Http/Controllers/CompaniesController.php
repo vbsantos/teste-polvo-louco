@@ -38,8 +38,7 @@ class CompaniesController extends Controller
         $company->name = $request->input('name');
         $company->email = $request->input('email');
         $company->site = $request->input('site');
-        $logo = $request->file('logo');
-        if (isset($logo)) {
+        if ($request->hasFile('logo')) {
             $filepath = $request->file('logo')->store('images', 'public');
             $company->logo = $filepath;
         } else {
@@ -82,9 +81,9 @@ class CompaniesController extends Controller
         $company->name = $request->name;
         $company->email = $request->email;
         $company->site = $request->site;
-        $logo = $request->file('logo');
-        if (isset($logo)) {
-            // $oldImage = $company->logo; // REVIEW remover imagem anterior?
+        if ($request->hasFile('logo')) {
+            $oldImage = $company->logo; // REVIEW remover imagem anterior?
+            unlink(public_path('storage/') . $oldImage);
             $path = $request->file('logo')->store('images', 'public');
             $company->logo = $path;
             $company->save();
