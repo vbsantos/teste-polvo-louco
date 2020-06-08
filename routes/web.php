@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,58 +37,58 @@ use Illuminate\Support\Facades\Route;
 // ])->middleware('auth');
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes(['register' => false]);
 
 Route::get('/employees', 'EmployeesController@index')
-    ->name('employee.index')
-    ->middleware('auth');
+  ->name('employee.index')
+  ->middleware('auth');
 
 Route::get('/employees/create', 'EmployeesController@create')
-    ->name('employee.create')
-    ->middleware('auth');
+  ->name('employee.create')
+  ->middleware('auth');
 
 Route::post('/employees/store', 'EmployeesController@store')
-    ->name('employee.store')
-    ->middleware('auth');
+  ->name('employee.store')
+  ->middleware('auth');
 
 Route::get('/employees/{id}/edit', 'EmployeesController@edit')
-    ->name('employee.edit')
-    ->middleware('auth');
+  ->name('employee.edit')
+  ->middleware('auth');
 
 Route::put('/employees/{id}/update', 'EmployeesController@update')
-    ->name('employee.update')
-    ->middleware('auth');
+  ->name('employee.update')
+  ->middleware('auth');
 
 Route::get('/employees/{id}/delete', 'EmployeesController@delete')
-    ->name('employee.delete')
-    ->middleware('auth');
+  ->name('employee.delete')
+  ->middleware('auth');
 
 Route::get('/companies', 'CompaniesController@index')
-    ->name('company.index')
-    ->middleware('auth');
+  ->name('company.index')
+  ->middleware('auth');
 
 Route::get('/companies/create', 'CompaniesController@create')
-    ->name('company.create')
-    ->middleware('auth');
+  ->name('company.create')
+  ->middleware('auth');
 
 Route::post('/companies/store', 'CompaniesController@store')
-    ->name('company.store')
-    ->middleware('auth');
+  ->name('company.store')
+  ->middleware('auth');
 
 Route::get('/companies/{id}/edit', 'CompaniesController@edit')
-    ->name('company.edit')
-    ->middleware('auth');
+  ->name('company.edit')
+  ->middleware('auth');
 
 Route::put('/companies/{id}/update', 'CompaniesController@update')
-    ->name('company.update')
-    ->middleware('auth');
+  ->name('company.update')
+  ->middleware('auth');
 
 Route::get('/companies/{id}/delete', 'CompaniesController@delete')
-    ->name('company.delete')
-    ->middleware('auth');
+  ->name('company.delete')
+  ->middleware('auth');
 
 Route::get('/dashboard', 'DashboardController@index')
-    ->middleware('auth');
+  ->middleware('auth');
